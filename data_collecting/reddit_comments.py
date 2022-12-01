@@ -24,6 +24,5 @@ class RedditComments:
         for n, pleb in enumerate(self.reddit):
             comment = pleb["body"]
             comments.append(comment)
-            print(f"Comment {n+1}:\n{comment}\n-------")
         return comments
 
