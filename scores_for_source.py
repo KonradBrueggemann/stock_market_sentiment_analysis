@@ -6,12 +6,13 @@ from text_processing.sentiment_analysis import SentimentAnalysis
 class ScoreChart:
     def __init__(self, query, after, before):
         self.query = query
-        self.after = after
-        self.before = before
+        self.after = unix_timestamp(after)
+        self.before = unix_timestamp(before)
         self.comments = self.get_comments()
         self.sentiment = self.get_polarity_score()
 
     def get_comments(self):
+        print(self.query, self.after, self.before)
         reddit = RedditComments(self.query, self.after, self.before)
         return reddit.return_data()
 
@@ -20,10 +21,10 @@ class ScoreChart:
         return SA.get_mean_score()
 
 
-q = "TSLA"
-after = "30-01-2022"
+q = "NFLX"
+after = "01-01-2022"
 after = unix_timestamp(after)
-before = "01-12-2022"
+before = "01-02-2022"
 before = unix_timestamp(before)
 
 if __name__ == "__main__":
