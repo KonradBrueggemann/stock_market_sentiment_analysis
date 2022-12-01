@@ -10,3 +10,12 @@ def unix_timestamp(date):
     chops = date.split("-")
     date = datetime.date(int(chops[2]), int(chops[1]), int(chops[0]))
     return str(int(time.mktime(date.timetuple())))
+
+
+def twit_format(date):
+    chops = date.split("-")
+    year = chops[2]
+    month = chops[1]
+    day = chops[0]
+    new_date = f"{year}-{month}-{day}T00:00:00Z"
+    return new_date
