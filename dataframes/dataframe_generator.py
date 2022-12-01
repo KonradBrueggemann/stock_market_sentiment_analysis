@@ -5,10 +5,11 @@ import time
 
 
 class DataFrame:
-    def __init__(self, query, start_date, end_date):
+    def __init__(self, query, start_date, end_date, sources):
         self.query = query
         self.start = start_date
         self.end = end_date
+        self.sources = sources
         self.dates = self.list_of_dates()   # list of all dates within timeframe (start-end), in D-M-Y format
         self.dataframe = self.convert_to_pandas_df()
 
@@ -33,7 +34,7 @@ class DataFrame:
         return date_list
 
     def get_sentiment_score(self, start, end):
-        score = ScoreChart(self.query, start, end)
+        score = ScoreChart(self.query, start, end, self.sources)
         return score.get_polarity_score()
 
     @staticmethod

@@ -13,6 +13,9 @@ def unix_timestamp(date):
 
 
 def twit_format(date):
+    """
+    helper method that converts date from D-M-Y format to Y-M-D and adds T00:00:00Z
+    """
     chops = date.split("-")
     year = chops[2]
     month = chops[1]

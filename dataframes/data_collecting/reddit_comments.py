@@ -14,6 +14,7 @@ class RedditComments:
                    f"&size=1000"
         self.data = requests.get(self.url)   # gets the data from pushshift.io archive
         self.reddit = self.data.json()["data"]
+        self.comments = self.return_data()
 
     def print_data(self):
         for pleb in self.reddit:
