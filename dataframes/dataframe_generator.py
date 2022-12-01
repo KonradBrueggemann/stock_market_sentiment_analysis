@@ -10,6 +10,7 @@ class DataFrame:
         self.start = start_date
         self.end = end_date
         self.dates = self.list_of_dates()   # list of all dates within timeframe (start-end), in D-M-Y format
+        self.dataframe = self.convert_to_pandas_df()
 
     def list_of_dates(self):
         """ generates a list of dates between two dates """
@@ -64,6 +65,10 @@ class DataFrame:
         value_col = data.values()   # get SP scores
         frame = {"Date": date_col, "Sentiment Score": value_col}
         return pd.DataFrame.from_dict(frame)
+
+    def save_to_csv(self):
+        file = self.dataframe
+        file.to_csv(f'output/{self.query}.csv', index=False, sep=";")
 
 
 q = "TSLA"

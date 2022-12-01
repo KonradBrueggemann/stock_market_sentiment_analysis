@@ -3,7 +3,8 @@ from dataframes.dataframe_generator import DataFrame
 
 def main(q, after, before):
     df = DataFrame(q, after, before)
-    print(df.convert_to_pandas_df())
+    print(df.dataframe)
+    df.save_to_csv()
 
 
 if __name__ == "__main__":
