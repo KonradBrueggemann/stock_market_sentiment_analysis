@@ -21,16 +21,16 @@ class DataFrame:
         month = int(start_chops[1])   # the input is a string like "12-05-2022"
         year = int(start_chops[2])    # so the first slice is the day and so on
         day = int(start_chops[0])
-        sdate = date(year, month, day)
+        sdate = date(year, month, day)  # datetime date object so pandas can work w it
 
-        end_chops = self.end.split("-")
+        end_chops = self.end.split("-")   # same stuff
         month = int(end_chops[1])
         year = int(end_chops[2])
         day = int(end_chops[0])
         edate = date(year, month, day)
 
-        timestamps = pd.date_range(sdate, edate-timedelta(days=1), freq='d').to_list()
-        date_list = [str(stamp.date().strftime("%d-%m-%Y")) for stamp in timestamps]
+        timestamps = pd.date_range(sdate, edate-timedelta(days=1), freq='d').to_list()   # creates list of timestamps
+        date_list = [str(stamp.date().strftime("%d-%m-%Y")) for stamp in timestamps]   # extract date in D-M-Y format
         print(date_list)
 
         return date_list
@@ -72,4 +72,4 @@ class DataFrame:
 
     def save_to_csv(self):
         file = self.dataframe
-        file.to_csv(f'output/{self.query}.csv', index=False, sep=";", decimal=",")
+        file.to_csv(f'output/{self.query}.csv', index=False, sep=";", decimal=",")   # default decimal separator is .

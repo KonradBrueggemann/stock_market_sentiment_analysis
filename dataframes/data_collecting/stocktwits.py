@@ -10,6 +10,6 @@ class Stocktwits:
 
     def get_tweets(self):
         twits = Collector()
-        messages = twits.get_history({'symbols': [self.query], 'start': self.start})
-        comments = [message["body"] for message in messages]
+        messages = twits.get_history({'symbols': [self.query], 'start': self.start})  # messages have a lot of attrs
+        comments = [message["body"] for message in messages]   # so we extract only the body (text content)
         return comments
