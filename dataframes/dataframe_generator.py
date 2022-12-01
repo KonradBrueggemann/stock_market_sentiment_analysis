@@ -72,13 +72,4 @@ class DataFrame:
 
     def save_to_csv(self):
         file = self.dataframe
-        file.to_csv(f'output/{self.query}.csv', index=False, sep=";")
-
-
-q = "TSLA"
-after = "01-11-2022"
-before = "29-11-2022"
-
-if __name__ == "__main__":
-    df = DataFrame(q, after, before)
-    print(df.convert_to_pandas_df())
+        file.to_csv(f'output/{self.query}.csv', index=False, sep=";", decimal=",")

@@ -9,9 +9,9 @@ def main(q, after, before, sources):
 
 
 if __name__ == "__main__":
-    stocks = ["NFLX"]
+    stocks = ["TSLA"]
     start = "01-11-2022"
-    end = "29-11-2022"
+    end = "01-12-2022"
     sources = ["reddit"]
 
     threads = [Process(target=main, args=(stock, start, end, sources)) for stock in stocks]

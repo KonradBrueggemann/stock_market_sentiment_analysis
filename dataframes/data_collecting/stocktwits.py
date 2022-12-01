@@ -13,9 +13,3 @@ class Stocktwits:
         messages = twits.get_history({'symbols': [self.query], 'start': self.start})
         comments = [message["body"] for message in messages]
         return comments
-
-
-if __name__ == "__main__":
-    pyt = Stocktwits("AMZN", '29-11-2022')
-    twits = pyt.twits
-    print(twits)

@@ -35,4 +35,3 @@ class ScoreChart:
         """ calls SentimentAnalysis class to get the mean sentiment polarity score for the comment list """
         SA = SentimentAnalysis(self.comments)
         return SA.get_mean_score()
-

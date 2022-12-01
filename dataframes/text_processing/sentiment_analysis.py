@@ -12,4 +12,4 @@ class SentimentAnalysis:
 
     def get_mean_score(self):
         total = [self.return_polarity_score(comment) for comment in self.comments]
-        return np.mean(total)   # get mean score for list of comments
+        return float(np.round(np.mean(total), 5))   # get mean score for list of comments
