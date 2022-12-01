@@ -12,7 +12,6 @@ class ScoreChart:
         self.sentiment = self.get_polarity_score()
 
     def get_comments(self):
-        print(self.query, self.after, self.before)
         reddit = RedditComments(self.query, self.after, self.before)
         return reddit.return_data()
 
@@ -20,13 +19,3 @@ class ScoreChart:
         SA = SentimentAnalysis(self.comments)
         return SA.get_mean_score()
 
-
-q = "NFLX"
-after = "01-01-2022"
-after = unix_timestamp(after)
-before = "01-02-2022"
-before = unix_timestamp(before)
-
-if __name__ == "__main__":
-    scores = ScoreChart(q, after, before)
-    print(scores.get_polarity_score())

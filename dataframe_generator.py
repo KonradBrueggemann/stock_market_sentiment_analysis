@@ -1,7 +1,7 @@
 from scores_for_source import ScoreChart
-from data_collecting.auxilliary import unix_timestamp
 
 import pandas as pd
+import time
 
 
 class DataFrame:
@@ -39,15 +39,14 @@ class DataFrame:
         year = int(date_chops[2])
         day = int(date_chops[0])
         res = f"{day+1}-{month}-{year}"
-        print(res)
         return res
 
     def run_through_datelist(self):
         date_score_dict = {}
         for start_date in self.dates:
             end_date = self.calc_day_after(start_date)
-            print(start_date + " " + end_date)
             date_score_dict[start_date] = self.get_sentiment_score(start_date, end_date)
+            time.sleep(1)
         return date_score_dict
 
     def convert_to_pandas_df(self):
@@ -59,11 +58,9 @@ class DataFrame:
 
 
 q = "NFLX"
-after = "01-01-2022"
-before = "03-01-2022"
+after = "01-11-2022"
+before = "29-11-2022"
 
 if __name__ == "__main__":
     df = DataFrame(q, after, before)
-    print(df.list_of_dates())
-    print(df.run_through_datelist())
     print(df.convert_to_pandas_df())
