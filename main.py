@@ -1,4 +1,4 @@
-from dataframe_generator import DataFrame
+from dataframes.dataframe_generator import DataFrame
 
 
 def main(q, after, before):
