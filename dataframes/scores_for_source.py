@@ -1,6 +1,6 @@
-from data_collecting.auxilliary import unix_timestamp
-from data_collecting.reddit_comments import RedditComments
-from text_processing.sentiment_analysis import SentimentAnalysis
+from dataframes.data_collecting.auxilliary import unix_timestamp
+from dataframes.data_collecting.reddit_comments import RedditComments
+from dataframes.text_processing.sentiment_analysis import SentimentAnalysis
 
 
 class ScoreChart:

@@ -1,4 +1,4 @@
-from scores_for_source import ScoreChart
+from dataframes.scores_for_source import ScoreChart
 
 import pandas as pd
 import time
