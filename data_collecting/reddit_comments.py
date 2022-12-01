@@ -22,9 +22,5 @@ class RedditComments:
     def return_data(self):
         """ from a dataset containing pushshift reddit comment objects,
         only the actual comment text will be stored in a list """
-        comments = []
-        for n, pleb in enumerate(self.reddit):
-            comment = pleb["body"]
-            comments.append(comment)
-        return comments
+        return [comment["body"] for comment in self.reddit]
 
