@@ -1,7 +1,10 @@
-from dataframes.data_collecting.auxilliary import unix_timestamp
+from dataframes.data_collecting.auxilliary import unix_timestamp, vantage_date, calc_day_before
 from dataframes.data_collecting.reddit_comments import RedditComments
 from dataframes.data_collecting.stocktwits import Stocktwits
 from dataframes.text_processing.sentiment_analysis import SentimentAnalysis
+from visualizer.main import Visualizer
+
+import pandas as pd
 
 
 class ScoreChart:
@@ -13,6 +16,7 @@ class ScoreChart:
         self.sources = sources
         self.comments = self.get_comments()
         self.SA = SentimentAnalysis(self.comments)
+        self.AV = Visualizer(after, before, query)
         self.sentiment = self.get_polarity_score()
 
     def get_comments(self):
@@ -39,3 +43,15 @@ class ScoreChart:
     def get_volume(self):
         """ calls SentimentAnalysis class to get the comment volume"""
         return self.SA.volume
+
+    def get_close_price(self):
+        data = pd.read_csv(f'resources/{self.query}_price_data.csv')
+        date = vantage_date(self.start)
+        print(date)
+        while True:
+            if date in data['date'].values:
+                return data.loc[data['date'] == date, 'close'].item()
+            else:
+                date = calc_day_before(date)
+
+
