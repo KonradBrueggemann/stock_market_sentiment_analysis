@@ -23,17 +23,21 @@ class SentimentAnalysis:
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
         self.model = AutoModelForSequenceClassification.from_pretrained(self.model_name)
 
-    def return_polarity_score(self, token):
-        encoded_text = self.tokenizer(token, return_tensors="pt")
-        output = self.model(**encoded_text)
-        scores = output[0][0].detach().numpy()
-        scores = softmax(scores)
-        scores_dict = {
-            "neg": scores[0],
-            "neu": scores[1],
-            "pos": scores[2]
-        }
-        return scores_dict["pos"]
+    def return_polarity_score(self, token, type):
+        if type == "roberta":
+            encoded_text = self.tokenizer(token, return_tensors="pt")
+            output = self.model(**encoded_text)
+            scores = output[0][0].detach().numpy()
+            scores = softmax(scores)
+            scores_dict = {
+                "neg": scores[0],
+                "neu": scores[1],
+                "pos": scores[2]
+            }
+            return scores_dict["pos"]
+
+        elif type == "nltk":
+            return self.sia.polarity_scores(token)["compound"]
 
     def tokenize(self, comment):
         stop = stopwords.words()
@@ -53,7 +57,7 @@ class SentimentAnalysis:
         for comment in self.comments:
             sentences = self.sentenize(comment)
             for sentence in sentences:
-                total.append(self.return_polarity_score(sentence))
+                total.append(self.return_polarity_score(sentence, type="nltk"))
         return total
 
     def get_mean_score(self):
