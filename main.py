@@ -9,7 +9,7 @@ def main(q, after, before, sources):
 
 
 if __name__ == "__main__":
-    stocks = ["TSLA"]
+    stocks = ["NFLX", "AMZN", "NVDA", "NVTA", "TSLA"]
     start = "01-11-2022"
     end = "01-12-2022"
     sources = ["reddit"]

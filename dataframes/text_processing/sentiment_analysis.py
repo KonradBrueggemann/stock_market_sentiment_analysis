@@ -1,16 +1,22 @@
+# NLTK for traditional approach
 import nltk
 from nltk import word_tokenize
 from nltk.corpus import stopwords
 import nltk.sentiment.vader as sev
 
+# for removing punctuations from the tokens
 from string import punctuation
 
+# math
 import numpy as np
 import pandas as pd
 
+# machine learning based approach
 from transformers import AutoTokenizer
 from transformers import AutoModelForSequenceClassification
 from scipy.special import softmax
+
+import torch
 
 
 class SentimentAnalysis:
@@ -20,8 +26,9 @@ class SentimentAnalysis:
         self.senti_table = pd.read_csv("resources/Loughran-McDonald_MasterDictionary_1993-2021.csv")
         self.sia = sev.SentimentIntensityAnalyzer()
         self.model_name = f"cardiffnlp/twitter-roberta-base-sentiment"
+        self.device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
         self.tokenizer = AutoTokenizer.from_pretrained(self.model_name)
-        self.model = AutoModelForSequenceClassification.from_pretrained(self.model_name)
+        self.model = AutoModelForSequenceClassification.from_pretrained(self.model_name).to(self.device)
 
     def return_polarity_score(self, token, type):
         if type == "roberta":
@@ -62,7 +69,8 @@ class SentimentAnalysis:
 
     def get_mean_score(self):
         total = self._get_mean_score()
-        return float(np.round(np.mean(total), 5))   # get mean score for list of comments
+        result = float(np.round(np.mean(total), 5))
+        return result if self.volume > 0 else 0   # get mean score for list of comments, if no comments return 0
 
     def get_post_volume(self):
         return len(self.comments)

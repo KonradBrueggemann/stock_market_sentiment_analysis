@@ -5,6 +5,8 @@ import pandas as pd
 import time
 import os
 
+from os.path import exists
+
 
 class DataFrame:
     def __init__(self, query, start_date, end_date, sources):
@@ -32,7 +34,6 @@ class DataFrame:
 
         timestamps = pd.date_range(sdate, edate-timedelta(days=1), freq='d').to_list()   # creates list of timestamps
         date_list = [str(stamp.date().strftime("%d-%m-%Y")) for stamp in timestamps]   # extract date in D-M-Y format
-        print(date_list)
 
         return date_list
 
@@ -75,7 +76,19 @@ class DataFrame:
         frame = {"Date": date_col, "Sentiment Score": value_col, "Volume": vol_col}
         return pd.DataFrame.from_dict(frame)
 
+    def _save_to_csv(self, file):
+        file_name = f'output/{self.query}.csv'
+        if not exists(file_name):
+            file.to_csv(file_name, index=False, sep=";", decimal=",")  # default decimal separator is .
+        else:
+            old_data = pd.read_csv(file_name, sep=";", decimal=",")  # get the data from the existing csv
+            new_data = self.dataframe
+            merged_data = pd.concat([old_data, new_data], ignore_index=True)   # and merge it with the new data
+            os.remove(file_name)   # sometimes there are permission errors when trying to append to a CSV
+            merged_data.to_csv(file_name, index=False, sep=";", decimal=",")
+
     def save_to_csv(self):
         file = self.dataframe
         os.makedirs("output", exist_ok=True)
-        file.to_csv(f'output/{self.query}.csv', index=False, sep=";", decimal=",")   # default decimal separator is .
+        self._save_to_csv(file)
+
