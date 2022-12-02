@@ -55,7 +55,6 @@ def calc_day_before(sdate):
     month = int(date_chops[1])
     year = int(date_chops[2])
     day = int(date_chops[0])
-    print(day, month, year)
     current_date = date(year, month, day)
     previous_day = current_date - timedelta(days=1)
     return previous_day.strftime("%d-%m-%Y")
