@@ -44,14 +44,15 @@ class ScoreChart:
         """ calls SentimentAnalysis class to get the comment volume"""
         return self.SA.volume
 
+    def _get_last_business_day(self, data, date):
+        if date in data['date'].values:
+            return date
+        else:
+            return self._get_last_business_day(data, vantage_date(calc_day_before(date)))
+
     def get_close_price(self):
         data = pd.read_csv(f'resources/{self.query}_price_data.csv')
-        date = vantage_date(self.start)
-        print(date)
-        while True:
-            if date in data['date'].values:
-                return data.loc[data['date'] == date, 'close'].item()
-            else:
-                date = calc_day_before(date)
+        date = self._get_last_business_day(data, vantage_date(self.start))
+        return data.loc[data['date'] == date, 'close'].item()
 
 
