@@ -12,6 +12,7 @@ class ScoreChart:
         self.before = unix_timestamp(before)
         self.sources = sources
         self.comments = self.get_comments()
+        self.SA = SentimentAnalysis(self.comments)
         self.sentiment = self.get_polarity_score()
 
     def get_comments(self):
@@ -33,5 +34,8 @@ class ScoreChart:
 
     def get_polarity_score(self):
         """ calls SentimentAnalysis class to get the mean sentiment polarity score for the comment list """
-        SA = SentimentAnalysis(self.comments)
-        return SA.get_mean_score()
+        return self.SA.get_mean_score()
+
+    def get_volume(self):
+        """ calls SentimentAnalysis class to get the comment volume"""
+        return self.SA.volume
