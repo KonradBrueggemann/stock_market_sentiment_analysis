@@ -1,6 +1,6 @@
 import datetime
 import time
-
+from datetime import date, timedelta
 
 def unix_timestamp(date):
     """
@@ -22,3 +22,40 @@ def twit_format(date):
     day = chops[0]
     new_date = f"{year}-{month}-{day}T00:00:00Z"
     return new_date
+
+
+def vantage_date(date):
+    start_chops = date.split("-")
+    month = int(start_chops[1])  # the input is a string like "12-05-2022"
+    year = int(start_chops[2])  # so the first slice is the day and so on
+    day = int(start_chops[0])
+    if day < 10:
+        day = f"0{day}"
+    return f"{year}-{month}-{day}"
+
+
+def calc_day_after(sdate):
+    """
+    simple method to increase the day in a D-M-Y date string by 1
+    """
+    date_chops = str(sdate).split("-")
+    month = int(date_chops[1])
+    year = int(date_chops[2])
+    day = int(date_chops[0])
+    current_date = date(year, month, day)
+    next_day = current_date + timedelta(days=1)
+    return next_day.strftime("%d-%m-%Y")
+
+
+def calc_day_before(sdate):
+    """
+    simple method to decrease the day in a Y-M-D date string by 1
+    """
+    date_chops = str(sdate).split("-")
+    month = int(date_chops[1])
+    year = int(date_chops[0])
+    day = int(date_chops[2])
+    print(day, month, year)
+    current_date = date(year, month, day)
+    previous_day = current_date - timedelta(days=1)
+    return previous_day.strftime("%d-%m-%Y")
