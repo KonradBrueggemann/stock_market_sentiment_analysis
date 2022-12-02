@@ -49,12 +49,12 @@ def calc_day_after(sdate):
 
 def calc_day_before(sdate):
     """
-    simple method to decrease the day in a Y-M-D date string by 1
+    simple method to decrease the day in a D-M-Y date string by 1
     """
     date_chops = str(sdate).split("-")
     month = int(date_chops[1])
-    year = int(date_chops[0])
-    day = int(date_chops[2])
+    year = int(date_chops[2])
+    day = int(date_chops[0])
     print(day, month, year)
     current_date = date(year, month, day)
     previous_day = current_date - timedelta(days=1)

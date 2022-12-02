@@ -45,14 +45,14 @@ class ScoreChart:
         return self.SA.volume
 
     def _get_last_business_day(self, data, date):
-        if date in data['date'].values:
-            return date
+        if vantage_date(date) in data['date'].values:
+            return vantage_date(date)
         else:
-            return self._get_last_business_day(data, vantage_date(calc_day_before(date)))
+            return self._get_last_business_day(data, calc_day_before(date))
 
     def get_close_price(self):
         data = pd.read_csv(f'resources/{self.query}_price_data.csv')
-        date = self._get_last_business_day(data, vantage_date(self.start))
+        date = self._get_last_business_day(data, self.start)
         return data.loc[data['date'] == date, 'close'].item()
 
 
