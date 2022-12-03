@@ -9,14 +9,15 @@ def main(q, after, before, sources):
 
 
 if __name__ == "__main__":
-    stocks = ["NFLX", "AMZN", "NVDA", "NVTA", "TSLA"]
-    start = "01-11-2022"
-    end = "01-12-2022"
+    stocks = ["NVDA"]
+    start = "26-11-2022"
+    end = "02-12-2022"
     sources = ["reddit"]
 
+    # create a process for each stock in the list
     threads = [Process(target=main, args=(stock, start, end, sources)) for stock in stocks]
     for thread in threads:
-        thread.start()
+        thread.start()   # start them simultaneously
     for thread in threads:
-        thread.join()
+        thread.join()   # wait for every process to be done before the program finishes
     print("Done.")

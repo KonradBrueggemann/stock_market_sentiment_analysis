@@ -11,17 +11,14 @@ class RedditComments:
                    f"&after={self.after}" \
                    f"&before={self.before}" \
                    f"&sort=desc" \
-                   f"&size=1000"
+                   f"&size=1000" \
+                   f"&limit=1000"
         self.data = requests.get(self.url)   # gets the data from pushshift.io archive
         try:
             self.reddit = self.data.json()["data"]   # reads the raw data with json
-        except:
+        except:  # sometimes the pushshift api doesnt return anything (overflow) so we treat this like an empty list
             self.reddit = []
         self.comments = self.return_data()   # extracts the actual texts from the data
-
-    def print_data(self):
-        for pleb in self.reddit:
-            print(pleb["body"])
 
     def return_data(self):
         """ from a dataset containing pushshift reddit comment objects,

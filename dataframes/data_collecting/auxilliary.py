@@ -51,10 +51,15 @@ def calc_day_before(sdate):
     """
     simple method to decrease the day in a D-M-Y date string by 1
     """
-    date_chops = str(sdate).split("-")
-    month = int(date_chops[1])
-    year = int(date_chops[2])
-    day = int(date_chops[0])
-    current_date = date(year, month, day)
+    current_date = string_to_date(sdate)
     previous_day = current_date - timedelta(days=1)
     return previous_day.strftime("%d-%m-%Y")
+
+
+def string_to_date(strdate):
+    chops = strdate.split("-")
+    month = int(chops[1])  # the input is a string like "12-05-2022"
+    year = int(chops[2])  # so the first slice is the day and so on
+    day = int(chops[0])
+    sdate = date(year, month, day)  # datetime date object so pandas can work w it
+    return sdate

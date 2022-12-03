@@ -10,7 +10,6 @@ class Stock:
         self.end_date = end_date
 
     def plot_data_frame(self):
-        print(self.data.head())
         start_date = pd.to_datetime(self.start_date)
         end_date = pd.to_datetime(self.end_date)
         self.data[self.data['date'].between(start_date, end_date)].plot(x='date', y='close', kind='line')

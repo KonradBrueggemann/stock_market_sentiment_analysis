@@ -1,5 +1,3 @@
-import pandas
-import pandas as pd
 from alpha_vantage.timeseries import TimeSeries
 
 
@@ -15,5 +13,4 @@ class AlphaVantage:
         data.columns = columns
         data.reset_index(inplace=True)
         df = data.rename(columns={'index': 'date'})
-        print(df.head())
         return df
