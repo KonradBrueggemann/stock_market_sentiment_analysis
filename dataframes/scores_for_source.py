@@ -15,7 +15,7 @@ class ScoreChart:
         self.before = unix_timestamp(before)
         self.sources = sources
         self.comments = self.get_comments()
-        self.SA = SentimentAnalysis(self.comments)
+        self.SA = SentimentAnalysis(self.comments[:20])
         self.AV = Visualizer(after, before, query)
         self.sentiment = self.get_polarity_score()
 
@@ -42,7 +42,7 @@ class ScoreChart:
 
     def get_volume(self):
         """ calls SentimentAnalysis class to get the comment volume"""
-        return self.SA.volume
+        return len(self.comments)
 
     def _get_last_business_day(self, data, date):
         if vantage_date(date) in data['date'].values:
