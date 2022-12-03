@@ -2,6 +2,7 @@ import datetime
 import time
 from datetime import date, timedelta
 
+
 def unix_timestamp(date):
     """
     helper method to convert a date from D-M-Y format to unix timestamp using datetime and time

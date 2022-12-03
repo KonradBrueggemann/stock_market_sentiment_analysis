@@ -29,9 +29,9 @@ class SentimentAnalysis:
     def get_stock_lex_val(self, sentence):
         values = []
         data = self.stocklex
-        tokens = self.tokenize(sentence)
-        tokens = self.apply_tags(tokens)
-        bigrams = self._bigrams(tokens)
+        tokens = self.tokenize(sentence)   # tokenize sentence
+        tokens = self.apply_tags(tokens)   # apply NUM und tkr tags
+        bigrams = self._bigrams(tokens)   # extract bigrams
         ignore = []
         for bigram in bigrams:
             if bigram in data['Item'].values:
@@ -47,10 +47,9 @@ class SentimentAnalysis:
                         values.append(score)
                         ignore.append(token)
                     except ValueError:
-                        values.append(self.sia.polarity_scores(token)["compound"])
-                else:
-                    values.append(self.sia.polarity_scores(token)["compound"])
+                        pass
 
+        print(values)
         return np.mean(values) if values != [] else 0
 
     def apply_tags(self, tokens):
