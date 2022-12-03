@@ -12,7 +12,6 @@ import pandas as pd
 class SentimentAnalysis:
     def __init__(self, comments):
         self.comments = comments  # these will be passed in list format from the main class
-        self.volume = self.get_post_volume()
         self.master_dict = pd.read_csv("resources/Loughran-McDonald_MasterDictionary_1993-2021.csv")
         self.stocklex = pd.read_csv("resources/Nuno_Oliveira_Stock_Lexicon.csv",
                                     sep=",",
@@ -49,7 +48,6 @@ class SentimentAnalysis:
                     except ValueError:
                         pass
 
-        print(values)
         return np.mean(values) if values != [] else 0
 
     def apply_tags(self, tokens):
@@ -93,7 +91,5 @@ class SentimentAnalysis:
     def get_mean_score(self):
         total = self._get_mean_score()
         result = float(np.round(np.mean(total), 5))
-        return result if self.volume > 0 else 0  # get mean score for list of comments, if no comments return 0
+        return result if len(self.comments) > 0 else 0  # get mean score for list of comments, if no comments return 0
 
-    def get_post_volume(self):
-        return len(self.comments)
