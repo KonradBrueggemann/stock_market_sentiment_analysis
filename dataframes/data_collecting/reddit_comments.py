@@ -19,7 +19,7 @@ class RedditComments:
         return [comment["body"] for comment in self.reddit]
 
     def _get_comments(self):
-        comments = self.api.search_comments(q=self.query, before=self.before, after=self.after, limit=10)
+        comments = self.api.search_comments(q=self.query, before=self.before, after=self.after, limit=1000)
         commentlst = [comment for comment in comments]
         return commentlst
 
