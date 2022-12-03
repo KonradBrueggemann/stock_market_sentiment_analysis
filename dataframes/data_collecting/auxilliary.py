@@ -38,11 +38,7 @@ def calc_day_after(sdate):
     """
     simple method to increase the day in a D-M-Y date string by 1
     """
-    date_chops = str(sdate).split("-")
-    month = int(date_chops[1])
-    year = int(date_chops[2])
-    day = int(date_chops[0])
-    current_date = date(year, month, day)
+    current_date = string_to_date(sdate)
     next_day = current_date + timedelta(days=1)
     return next_day.strftime("%d-%m-%Y")
 
