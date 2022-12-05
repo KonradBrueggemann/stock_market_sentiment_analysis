@@ -12,7 +12,7 @@ if __name__ == "__main__":
     stocks = ["NFLX"]
     start = "01-11-2022"
     end = "01-12-2022"
-    sources = ["reddit"]
+    sources = ["reddit", "stocktwits"]
 
     # create a process for each stock in the list
     threads = [Process(target=main, args=(stock, start, end, sources)) for stock in stocks]
