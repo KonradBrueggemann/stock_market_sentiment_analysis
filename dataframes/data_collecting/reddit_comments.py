@@ -2,6 +2,7 @@ import requests
 import pandas as pd
 
 from pmaw import PushshiftAPI
+from dataframes.data_collecting.auxilliary import unix_timestamp
 
 
 class RedditComments:
@@ -23,3 +24,7 @@ class RedditComments:
         commentlst = [comment for comment in comments]
         return commentlst
 
+
+if __name__ == "__main__":
+    reddit = RedditComments("tsla", unix_timestamp("01-12-2022"), unix_timestamp("02-12-2022"))
+    print(reddit.comments)
