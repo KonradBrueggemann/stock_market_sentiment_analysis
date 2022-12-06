@@ -16,8 +16,10 @@ class ScoreChart:
         self.before = unix_timestamp(before)
         self.sources = sources
         self.comments = self.get_comments()
-        self.reddit_sentiment = SentimentAnalysis(self.comments["reddit"][:20])
-        self.stocktwits_sentiment = SentimentAnalysis(self.comments["stocktwits"][:100])
+        if "reddit" in self.sources:
+            self.reddit_sentiment = SentimentAnalysis(self.comments["reddit"][:20])
+        if "stocktwits" in self.sources:
+            self.stocktwits_sentiment = SentimentAnalysis(self.comments["stocktwits"][:100])
         self.AV = Visualizer(after, before, query)
         self.rsent = self.get_polarity_score_reddit()
         self.tsent = self.get_polarity_score_stocktwits()
