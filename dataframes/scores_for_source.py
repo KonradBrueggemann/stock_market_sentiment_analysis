@@ -18,11 +18,15 @@ class ScoreChart:
         self.comments = self.get_comments()
         if "reddit" in self.sources:
             self.reddit_sentiment = SentimentAnalysis(self.comments["reddit"][:20])
+            self.rsent = self.get_polarity_score_reddit()
+        else:
+            self.rsent = []
         if "stocktwits" in self.sources:
             self.stocktwits_sentiment = SentimentAnalysis(self.comments["stocktwits"][:100])
+            self.tsent = self.get_polarity_score_stocktwits()
+        else:
+            self.tsent = []
         self.AV = Visualizer(after, before, query)
-        self.rsent = self.get_polarity_score_reddit()
-        self.tsent = self.get_polarity_score_stocktwits()
 
     def get_comments(self):
         """
@@ -51,7 +55,10 @@ class ScoreChart:
 
     def get_volume(self):
         """ calls SentimentAnalysis class to get the comment volume"""
-        return len(self.comments["reddit"]) + len(self.comments["stocktwits"])
+        vol = 0
+        for source in self.sources:
+            vol += len(self.comments[source])
+        return vol
 
     def _get_last_business_day(self, data, date):
         if vantage_date(date) in data['date'].values:
