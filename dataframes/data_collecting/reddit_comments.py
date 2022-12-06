@@ -1,6 +1,3 @@
-import requests
-import pandas as pd
-
 from pmaw import PushshiftAPI
 from dataframes.data_collecting.auxilliary import unix_timestamp
 
@@ -20,8 +17,15 @@ class RedditComments:
         return [comment["body"] for comment in self.reddit]
 
     def _get_comments(self):
-        comments = self.api.search_comments(q=self.query, before=self.before, after=self.after, limit=1000)
-        commentlst = [comment for comment in comments]
+        subs = ["wallstreetbets", "trading", "stocks"]
+        commentlst = []
+        for sub in subs:
+            comments = self.api.search_comments(q=self.query,
+                                                before=self.before,
+                                                after=self.after,
+                                                limit=1000,
+                                                subreddit=sub)
+            commentlst.extend([comment for comment in comments])
         return commentlst
 
 
