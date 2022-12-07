@@ -1,6 +1,7 @@
 from dataframes.data_collecting.auxilliary import unix_timestamp, vantage_date, calc_day_before
 from dataframes.data_collecting.reddit_comments import RedditComments
 from dataframes.data_collecting.stocktwits import Stocktwits
+from dataframes.data_collecting.twitter import Twitter
 from dataframes.text_processing.sentiment_analysis import SentimentAnalysis
 from visualizer.main import Visualizer
 
@@ -19,7 +20,9 @@ class ScoreChart:
         self.reddit_sentiment = SentimentAnalysis(self.comments["reddit"][:100])
         self.rsent = self.get_polarity_score_reddit()
         self.stocktwits_sentiment = SentimentAnalysis(self.comments["stocktwits"][:100])
-        self.tsent = self.get_polarity_score_stocktwits()
+        self.stsent = self.get_polarity_score_stocktwits()
+        self.twitter_sentiment = SentimentAnalysis(self.comments["twitter"])
+        self.twsent = self.get_polarity_score_twitter()
         self.AV = Visualizer(after, before, query)
 
     def get_comments(self):
@@ -37,6 +40,10 @@ class ScoreChart:
             stocktwits = Stocktwits(self.query, self.start, self.end)
             comments["stocktwits"] = stocktwits.twits
 
+        if "twitter" in self.sources:
+            tweets = Twitter(self.query, self.start)
+            comments["twitter"] = tweets.tweets
+
         return comments
 
     def get_polarity_score_reddit(self):
@@ -46,6 +53,9 @@ class ScoreChart:
     def get_polarity_score_stocktwits(self):
         """ calls SentimentAnalysis class to get the mean sentiment polarity score for the comment list """
         return self.stocktwits_sentiment.get_mean_score()
+
+    def get_polarity_score_twitter(self):
+        return self.twitter_sentiment.get_mean_score()
 
     def get_volume(self):
         """ calls SentimentAnalysis class to get the comment volume"""
