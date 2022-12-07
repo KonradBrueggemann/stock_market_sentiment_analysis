@@ -36,7 +36,10 @@ class DataFrame:
         return score.rsent
 
     def get_stocktwits_score(self, score):
-        return score.tsent
+        return score.stsent
+
+    def get_twitter_score(self, score):
+        return score.twsent
 
     def get_volume(self, score):
         return score.get_volume()
@@ -53,6 +56,7 @@ class DataFrame:
             date_score_dict[start_date] = [
                                            self.get_reddit_score(score),
                                            self.get_stocktwits_score(score),
+                                           self.get_twitter_score(score),
                                            self.get_volume(score),
                                            self.get_price(score)
                                                                 ]
@@ -70,11 +74,13 @@ class DataFrame:
         date_col = data.keys()  # get dates
         r_col = [list_of_values[0] for list_of_values in data.values()]  # get reddit SP scores
         t_col = [list_of_values[1] for list_of_values in data.values()]  # get stocktwits SP scores
-        vol_col = [list_of_values[2] for list_of_values in data.values()]  # get volume
-        price_col = [list_of_values[3] for list_of_values in data.values()]  # get price
+        tw_col = [list_of_values[2] for list_of_values in data.values()]  # get twitter SP scores
+        vol_col = [list_of_values[3] for list_of_values in data.values()]  # get volume
+        price_col = [list_of_values[4] for list_of_values in data.values()]  # get price
         frame = {"Date": date_col,
                  "Reddit Sentiment Score": r_col,
                  "StockTwits Sentiment Score": t_col,
+                 "Twitter Sentiment Score": tw_col,
                  "Volume": vol_col,
                  "Price": price_col}
         return frame
