@@ -10,9 +10,9 @@ def main(q, after, before, sources):
 
 if __name__ == "__main__":
     stocks = ["NFLX"]
-    start = "01-11-2022"
-    end = "01-12-2022"
-    sources = ["reddit", "stocktwits"]
+    start = "05-12-2022"
+    end = "06-12-2022"
+    sources = ["reddit", "stocktwits", "twitter"]
 
     # create a process for each stock in the list
     threads = [Process(target=main, args=(stock, start, end, sources)) for stock in stocks]
