@@ -3,6 +3,7 @@ from dataframes.data_collecting.reddit_comments import RedditComments
 from dataframes.data_collecting.stocktwits import Stocktwits
 from dataframes.data_collecting.twitter import Twitter
 from dataframes.text_processing.sentiment_analysis import SentimentAnalysis
+from dataframes.text_processing.classifier import Classifier
 from visualizer.main import Visualizer
 
 import pandas as pd
@@ -24,6 +25,8 @@ class ScoreChart:
         self.twitter_sentiment = SentimentAnalysis(self.comments["twitter"])
         self.twsent = self.get_polarity_score_twitter()
         self.AV = Visualizer(after, before, query)
+        self.classifier = Classifier()
+        self.label = self.label_comments()
 
     def get_comments(self):
         """
@@ -74,5 +77,11 @@ class ScoreChart:
         data = pd.read_csv(f'resources/{self.query}_price_data.csv')
         date = self._get_last_business_day(data, self.start)
         return data.loc[data['date'] == date, 'close'].item()
+
+    def label_comments(self):
+        labels = []
+        for comment in self.comments:
+            label = self.classifier.classify(comment)
+        return max(set(labels), key=labels.count)
 
 

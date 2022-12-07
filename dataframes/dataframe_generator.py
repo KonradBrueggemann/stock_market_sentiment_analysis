@@ -41,6 +41,9 @@ class DataFrame:
     def get_twitter_score(self, score):
         return score.twsent
 
+    def get_label(self, score):
+        return score.label
+
     def get_volume(self, score):
         return score.get_volume()
 
@@ -58,6 +61,7 @@ class DataFrame:
                                            self.get_stocktwits_score(score),
                                            self.get_twitter_score(score),
                                            self.get_volume(score),
+                                           self.get_label(score),
                                            self.get_price(score)
                                                                 ]
             time.sleep(1.5)   # this makes sure the pushshift.io API is ready for the next request
@@ -76,12 +80,14 @@ class DataFrame:
         t_col = [list_of_values[1] for list_of_values in data.values()]  # get stocktwits SP scores
         tw_col = [list_of_values[2] for list_of_values in data.values()]  # get twitter SP scores
         vol_col = [list_of_values[3] for list_of_values in data.values()]  # get volume
-        price_col = [list_of_values[4] for list_of_values in data.values()]  # get price
+        lab_col = [list_of_values[4] for list_of_values in data.values()]  # get label
+        price_col = [list_of_values[5] for list_of_values in data.values()]  # get price
         frame = {"Date": date_col,
                  "Reddit Sentiment Score": r_col,
                  "StockTwits Sentiment Score": t_col,
                  "Twitter Sentiment Score": tw_col,
                  "Volume": vol_col,
+                 "General Sentiment": lab_col,
                  "Price": price_col}
         return frame
 
