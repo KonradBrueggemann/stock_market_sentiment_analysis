@@ -80,8 +80,24 @@ class ScoreChart:
 
     def label_comments(self):
         labels = []
-        for comment in self.comments:
-            label = self.classifier.classify(comment)
-        return max(set(labels), key=labels.count)
+        for source in self.comments:
+            comments = self.comments[source]
+            for comment in comments:
+                label = self.classifier.classify(comment)
+                labels.append(label)
+        return self.percentage(labels)
+
+    def percentage(self, lst):
+        freq = {}
+        for item in lst:
+            # checking the element in dictionary
+            if item in freq:
+                # incrementing the count
+                freq[item] += 1
+            else:
+                # initializing the count
+                freq[item] = 1
+        off = 100/len(lst)
+        return freq["positive"]*off
 
 
