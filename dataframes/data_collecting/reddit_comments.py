@@ -17,6 +17,11 @@ class RedditComments:
         return [comment["body"] for comment in self.reddit]
 
     def _get_comments(self):
+        """
+        for the sake of the quality of the comments, as well as runtime purposes, only wsb, r/trading and r/stocks
+        will be fetched
+        from each sub a maximum of 1000 comments within the given time frame will be stored
+        """
         subs = ["wallstreetbets", "trading", "stocks"]
         commentlst = []
         for sub in subs:

@@ -9,9 +9,9 @@ def main(q, after, before, sources):
 
 
 if __name__ == "__main__":
-    stocks = ["NFLX"]
-    start = "05-12-2022"
-    end = "06-12-2022"
+    stocks = ["AMC"]
+    start = "01-12-2022"
+    end = "07-12-2022"
     sources = ["reddit", "stocktwits", "twitter"]
 
     # create a process for each stock in the list

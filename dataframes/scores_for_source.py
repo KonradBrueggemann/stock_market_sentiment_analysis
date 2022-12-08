@@ -11,6 +11,16 @@ import pandas as pd
 
 class ScoreChart:
     def __init__(self, query, after, before, sources):
+        """
+        creates a "ScoreChart" object for a specific day (before variable is always 1 day after the before variable
+        so we look at a 24 hour time frame
+        the scorechart object will contain sentiment scores for reddit, twitter and stocktwits
+        as well as the general sentiment and the stock price on close
+        :param query: stock ticker
+        :param after: start of time period to get data from
+        :param before: end of time period
+        :param sources: twitter, stocktwits, reddit
+        """
         self.query = query
         self.start = after   # stocktwits scraper doesnt need the unix timestamp
         self.end = before

@@ -4,6 +4,9 @@ from datetime import date, timedelta
 
 
 def tweet_to_dmy(date: str):
+    """
+    extracts the date from a tweet object and returns it in D-M-Y format
+    """
     toks = str(date.split(" ")[0]).split("-")
     month = toks[1]
     day = toks[2]
@@ -34,6 +37,9 @@ def twit_format(date):
 
 
 def vantage_date(date):
+    """
+    turns date from D-M-Y format to Y-M-D which is required by alpha vantage api
+    """
     start_chops = date.split("-")
     month = int(start_chops[1])  # the input is a string like "12-05-2022"
     year = int(start_chops[2])  # so the first slice is the day and so on
@@ -62,6 +68,9 @@ def calc_day_before(sdate):
 
 
 def string_to_date(strdate):
+    """
+    turns a date in string format using D-M-Y to a date object
+    """
     chops = strdate.split("-")
     month = int(chops[1])  # the input is a string like "12-05-2022"
     year = int(chops[2])  # so the first slice is the day and so on
