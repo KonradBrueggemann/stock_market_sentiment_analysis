@@ -26,13 +26,16 @@ def _convert_to_pandas_df(data):
     vol_col = [list_of_values[3] for list_of_values in data.values()]  # get volume
     lab_col = [list_of_values[4] for list_of_values in data.values()]  # get label
     price_col = [list_of_values[5] for list_of_values in data.values()]  # get price
+    rate_col = [list_of_values[6] for list_of_values in data.values()]  # get rate
     frame = {"Date": date_col,
              "Reddit Sentiment Score": r_col,
              "StockTwits Sentiment Score": t_col,
              "Twitter Sentiment Score": tw_col,
              "Volume": vol_col,
              "General Sentiment": lab_col,
-             "Price": price_col}
+             "Price": price_col,
+             "Rate": rate_col}
+
     return frame
 
 
@@ -86,16 +89,20 @@ class DataFrame:
     def run_through_datelist(self):
         """ iterates through the date list to get the SP score for each day """
         date_score_dict = {}
-        for start_date in self.dates:
+        old_scores = []
+        for i, start_date in enumerate(self.dates):
             end_date = calc_day_after(start_date)   # to get the comments of day X, do X-M-Y to (X+1)-M-Y
             score = ScoreChart(self.query, start_date, end_date, self.sources)
+            old_scores.append(score)
+            rate = 1 if self.get_price(score) > self.get_price(old_scores[i-1]) else 0
             date_score_dict[start_date] = [
                                            self.get_reddit_score(score),
                                            self.get_stocktwits_score(score),
                                            self.get_twitter_score(score),
                                            self.get_volume(score),
                                            self.get_label(score),
-                                           self.get_price(score)
+                                           self.get_price(score),
+                                           rate
                                                                 ]
             time.sleep(1.5)   # this makes sure the pushshift.io API is ready for the next request
         return date_score_dict
