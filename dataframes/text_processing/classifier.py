@@ -5,6 +5,9 @@ from sklearn.feature_extraction.text import TfidfTransformer
 from sklearn.model_selection import train_test_split
 from sklearn.naive_bayes import *
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score, f1_score
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
+from sklearn.svm import SVC
 
 
 class Classifier:
@@ -17,7 +20,7 @@ class Classifier:
         """
         pd.set_option('max_colwidth', 1000)
         self.df = pd.read_csv("resources/twitter_2013_labelled_tweets.csv")
-        self.vectorizer = CountVectorizer(max_features=1500, min_df=0.0009, max_df=0.9)
+        self.vectorizer = CountVectorizer(max_features=2000, min_df=0.0001, max_df=0.9)
         self.tfidfconverter = TfidfTransformer()
         self.classifier, self.X, self.y = self.initialize_model()
 
